@@ -8,32 +8,74 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
     @IBOutlet weak var pickImage: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topTextView: UITextView!
-    @IBOutlet weak var inputTopText: UITextField!
+    @IBOutlet weak var bottomTextView: UITextView!
     let imagePicker = UIImagePickerController()
+    
+    let textAttributes = NSAttributedString(string: "Text", attributes:[
+        NSStrokeColorAttributeName:UIColor.blackColor(),
+        NSForegroundColorAttributeName: UIColor.whiteColor(),
+        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
+        NSStrokeWidthAttributeName: 10.0
+        ])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        pickImage.layer.borderColor = UIColor.blackColor().CGColor
-        pickImage.layer.borderWidth = 3.0
-        topTextView.backgroundColor = UIColor.clearColor()
-    }
+        
+        topTextView.attributedText = textAttributes
+        topTextView.textAlignment = NSTextAlignment.Center
+        topTextView.textColor = UIColor.whiteColor()
+        
+        bottomTextView.attributedText = textAttributes
+        bottomTextView.textAlignment = NSTextAlignment.Center
+        bottomTextView.textColor = UIColor.whiteColor()
 
+        imagePicker.delegate = self
+        topTextView.delegate = self
+        bottomTextView.delegate = self
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.subscribeToKeyboardNotification()
+        print("\(topTextView.textColor)")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.unsubscribeFromKeyboardNotifications()
+    }
+ 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
+    //MARK: - Actions
+    
+    //Pick From an Album
+    @IBAction func pickAnImageFromAlbum(sender:AnyObject){
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        pickImage.contentMode = UIViewContentMode.ScaleAspectFill
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    //Pick from a camera
+    @IBAction func pickAnImageFromCamera(sender: AnyObject) {
+        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+        pickImage.contentMode = UIViewContentMode.ScaleAspectFill
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    //MARK: - ImagePicker Delegate Controlls
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
 
-    @IBAction func pickImage(sender: UIBarButtonItem) {
-        imagePicker.delegate = self
-        self .presentViewController(imagePicker, animated: true, completion: nil)
-        
-        print("pressed")
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -48,44 +90,43 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    //Pick From an Album
-    @IBAction func pickAnImageFromAlbum(sender:AnyObject){
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        pickImage.contentMode = UIViewContentMode.ScaleAspectFill
-        self.presentViewController(imagePicker, animated: true, completion: nil)
-    }
+    //MARK: - TextView Delegate Controlls
     
-    //Pick from a camera
-    @IBAction func pickAnImageFromCamera(sender: AnyObject) {
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        pickImage.contentMode = UIViewContentMode.ScaleAspectFill
-        self.presentViewController(imagePicker, animated: true, completion: nil)
-    }
-    
-    @IBAction func editTopText(sender: AnyObject) {
-        inputTopText.delegate = self
-        textFieldShouldReturn(inputTopText)
-        topTextView.text = inputTopText.text
-
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        textField.resignFirstResponder()
-    }
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
         return true
     }
     
-    //When imagePickerController finishes push text to front
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        topTextView.bringSubviewToFront(pickImage)
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n"){
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
+    //Move Keyboard up so it doesn't cover the textField
+    func keyboardWillShow(notification: NSNotification){
+        self.view.frame.origin.y -= getKeyboardHeight(notification)
+    }
+    
+    func keyboardWillHide(notification: NSNotification){
+        self.view.frame.origin.y += getKeyboardHeight(notification)
+    }
 
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as!NSValue //of CGRect
+        return keyboardSize.CGRectValue().height
+    }
+    
+    func subscribeToKeyboardNotification(){
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
 }
 

@@ -21,83 +21,73 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="etH-kw-63Q">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
                             </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-ut-bOz">
+                                <rect key="frame" x="57" y="511" width="300" height="150"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Text">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue-CondensedBlack"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2QM-Ub-4JQ">
                                 <rect key="frame" x="0.0" y="692" width="414" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="XoF-1a-bSJ"/>
-                                </constraints>
                                 <items>
-                                    <barButtonItem title="Pick" id="Drr-oU-6gp">
-                                        <connections>
-                                            <action selector="pickImage:" destination="BYZ-38-t0r" id="Y56-HG-tY6"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Album" id="ZP7-iv-EFD">
+                                    <barButtonItem title="Album" width="189" id="ZP7-iv-EFD">
                                         <connections>
                                             <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="HgN-Jn-B8U"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Camera" id="wEa-P6-vAZ">
+                                    <barButtonItem title="Camera" width="135" id="wEa-P6-vAZ">
                                         <connections>
                                             <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="qQG-EA-X97"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="XoF-1a-bSJ"/>
-                                    </mask>
-                                </variation>
                             </toolbar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jrh-Iu-ohH">
-                                <rect key="frame" x="95" y="185" width="225" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="editTopText:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="UP8-aj-9WP"/>
-                                </connections>
-                            </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wUr-ee-GUH">
-                                <rect key="frame" x="87" y="28" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="at2-r9-w5e">
+                                <rect key="frame" x="57" y="35" width="300" height="150"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Text">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue-CondensedBlack"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Text" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F3R-9g-Vy6">
-                                <rect key="frame" x="95" y="486" width="225" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2QM-Ub-4JQ" secondAttribute="bottom" id="2JD-tc-JTs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="etH-kw-63Q" secondAttribute="trailing" constant="-20" id="6aF-ZC-alb"/>
-                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="top" secondItem="etH-kw-63Q" secondAttribute="bottom" id="Dty-As-Ihe"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Kwh-mc-SOY"/>
-                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="RPa-38-kGP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2QM-Ub-4JQ" secondAttribute="trailing" constant="-20" id="UTL-YK-KuB"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-5" id="VA7-TB-t1e"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="146" id="VpQ-IA-fhg"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="bSX-zm-7db"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="efL-4W-Il2"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="-5" id="kLp-OI-mUS"/>
+                            <constraint firstItem="5N6-ut-bOz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="37" id="15m-B8-iZS"/>
+                            <constraint firstItem="at2-r9-w5e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="37" id="1Rt-vY-je7"/>
+                            <constraint firstItem="etH-kw-63Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="3Xo-pT-MZH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2QM-Ub-4JQ" secondAttribute="bottom" id="E0V-Cc-ogc"/>
+                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="top" secondItem="etH-kw-63Q" secondAttribute="bottom" id="Erl-uV-cIi"/>
+                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="IPy-Vg-rRs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5N6-ut-bOz" secondAttribute="trailing" constant="37" id="JW1-Fh-0fo"/>
+                            <constraint firstItem="at2-r9-w5e" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="15" id="LJt-rt-OZv"/>
+                            <constraint firstItem="etH-kw-63Q" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="LvN-UU-xX7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="etH-kw-63Q" secondAttribute="trailing" constant="-20" id="S8l-jW-6vH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="at2-r9-w5e" secondAttribute="trailing" constant="37" id="dKB-Rr-zIG"/>
+                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="top" secondItem="5N6-ut-bOz" secondAttribute="bottom" constant="31" id="e96-cA-W43"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2QM-Ub-4JQ" secondAttribute="trailing" constant="-20" id="vgQ-Qd-8il"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="VA7-TB-t1e"/>
-                                <exclude reference="VpQ-IA-fhg"/>
-                                <exclude reference="efL-4W-Il2"/>
-                                <exclude reference="kLp-OI-mUS"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="bottomTextView" destination="5N6-ut-bOz" id="bYo-pC-GTt"/>
                         <outlet property="cameraButton" destination="wEa-P6-vAZ" id="YmM-Rc-0wk"/>
-                        <outlet property="inputTopText" destination="jrh-Iu-ohH" id="rAE-Vw-Xz1"/>
                         <outlet property="pickImage" destination="etH-kw-63Q" id="iNg-Q7-eKv"/>
-                        <outlet property="topTextView" destination="wUr-ee-GUH" id="xVB-u2-mJi"/>
+                        <outlet property="topTextView" destination="at2-r9-w5e" id="MIR-pV-GyM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
