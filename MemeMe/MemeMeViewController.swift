@@ -8,18 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
     @IBOutlet weak var pickImage: UIImageView!
-    @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var topTextView: UITextView!
     @IBOutlet weak var bottomTextView: UITextView!
     @IBOutlet weak var picToolBar: UIToolbar!
-    
     @IBOutlet weak var stateToolBar: UIToolbar!
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
     
     var memeImage: UIImage?
     let imagePicker = UIImagePickerController()
@@ -47,13 +44,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
         topTextView.delegate = self
         bottomTextView.delegate = self
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.subscribeToKeyboardNotification()
-        self.subscribeViewOrientation()
+        subscribeToKeyboardNotification()
         
         if(pickImage.image == nil){
             shareButton.enabled = false
@@ -65,8 +60,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.unsubscribeFromKeyboardNotifications()
-        self.unsubscribeViewOrientation()
+        unsubscribeFromKeyboardNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +69,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //MARK: - Actions
     
-    //Pick From an Album
+    //Pick from an album
     @IBAction func pickAnImageFromAlbum(sender:AnyObject){
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         pickImage.contentMode = UIViewContentMode.ScaleAspectFill
@@ -89,6 +83,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
+    //Cancel button resets screen to initial state
     @IBAction func cancelButton(sender: UIBarButtonItem){
         self.pickImage.image = nil
         topTextView.text = "TOP"
@@ -96,7 +91,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         shareButton.enabled = false
     }
     
-    //MARK: - ImagePicker Delegate Controlls
+    //MARK: - ImagePicker Delegate Controls
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -109,8 +104,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    //MARK: - TextView Delegate Controlls
+    //MARK: - TextView Delegate Controls
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n"){
@@ -121,12 +115,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        //textView.autocorrectionType = .No
         textView.text = ""
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        textView.resignFirstResponder()
     }
     
     //MARK: - Keyboard Notifications
@@ -159,23 +148,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    //MARK: - Orientation notifications
-    
-    func changeBarButtonWidth(notification: NSNotification){
-        shareButton.width = self.view.bounds.width/2.0
-        cancelButton.width = self.view.bounds.width/2.0
-        cameraButton.width = self.view.bounds.width/2.0
-        albumButton.width = self.view.bounds.width/2.0
-    }
-    
-    func subscribeViewOrientation(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeBarButtonWidth:", name: UIDeviceOrientationDidChangeNotification, object: nil)
-    }
-    
-    func unsubscribeViewOrientation(){
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIDeviceOrientationDidChangeNotification, object: nil)
-    }
-    
     //MARK: - Meme Image functions
     
     func generateMemedImage()-> UIImage {
@@ -199,12 +171,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func saveMeme(){
         let meme = Meme(tText: topTextView.text!, bText: bottomTextView.text!, img: pickImage.image!, memeImg: memeImage!)
+        print(meme.description)
     }
     
     @IBAction func shareImage(sender: UIBarButtonItem) {
-        self.memeImage = generateMemedImage()
+        memeImage = generateMemedImage()
         
-        let imageObject = [self.memeImage!]
+        let imageObject = [memeImage!]
         
         let shareImageVC = UIActivityViewController(activityItems: imageObject, applicationActivities: nil)
         /*Answer for how to fix view controller presentation on IPAD can be found at
@@ -221,6 +194,5 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
         }
     }
-    
 }
 

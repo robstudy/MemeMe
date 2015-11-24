@@ -22,4 +22,10 @@ class Meme {
         memeImage = memeImg
     }
     
+    var description: String {
+        get {
+            return "Top text:'\(self.topText)', bottom text: '\(self.bottomText)'."
+        }
+    }
+    
 }

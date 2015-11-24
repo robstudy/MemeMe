@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Meme Me View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MemeMeViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -21,21 +21,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="etH-kw-63Q">
                                 <rect key="frame" x="0.0" y="44" width="414" height="648"/>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2QM-Ub-4JQ">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
-                                <items>
-                                    <barButtonItem title="Camera" width="135" id="wEa-P6-vAZ">
-                                        <connections>
-                                            <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="qQG-EA-X97"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Album" width="189" id="ZP7-iv-EFD">
-                                        <connections>
-                                            <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="HgN-Jn-B8U"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-ut-bOz">
+                                <rect key="frame" x="57" y="658" width="300" height="34"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Text">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue-CondensedBlack"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="at2-r9-w5e">
                                 <rect key="frame" x="57" y="49" width="300" height="34"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,32 +52,37 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fhj-CE-WAI">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <items>
-                                    <barButtonItem title="Share" width="185" id="oSB-0D-OzN">
+                                    <barButtonItem systemItem="action" id="oSB-0D-OzN">
                                         <connections>
                                             <action selector="shareImage:" destination="BYZ-38-t0r" id="ZwY-oY-zoI"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Cancel" width="198" id="OIh-p7-sIw">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="kcQ-Ka-1av"/>
+                                    <barButtonItem title="Cancel" width="96" id="OIh-p7-sIw">
                                         <connections>
                                             <action selector="cancelButton:" destination="BYZ-38-t0r" id="0Dx-TA-Tiw"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-ut-bOz">
-                                <rect key="frame" x="57" y="658" width="300" height="34"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Text">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <font key="NSFont" size="14" name="HelveticaNeue-CondensedBlack"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2QM-Ub-4JQ">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cU5-VY-z9z"/>
+                                    <barButtonItem systemItem="camera" id="wEa-P6-vAZ">
+                                        <connections>
+                                            <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="qQG-EA-X97"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="pWz-pJ-SNH"/>
+                                    <barButtonItem title="Album" id="ZP7-iv-EFD">
+                                        <connections>
+                                            <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="HgN-Jn-B8U"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="V6V-y5-sAL"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -102,10 +106,8 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
-                        <outlet property="albumButton" destination="ZP7-iv-EFD" id="ZWc-d2-a4n"/>
                         <outlet property="bottomTextView" destination="5N6-ut-bOz" id="bYo-pC-GTt"/>
                         <outlet property="cameraButton" destination="wEa-P6-vAZ" id="YmM-Rc-0wk"/>
-                        <outlet property="cancelButton" destination="OIh-p7-sIw" id="7QU-al-fnQ"/>
                         <outlet property="picToolBar" destination="2QM-Ub-4JQ" id="NDO-Am-Pxb"/>
                         <outlet property="pickImage" destination="etH-kw-63Q" id="iNg-Q7-eKv"/>
                         <outlet property="shareButton" destination="oSB-0D-OzN" id="aAp-PH-ocE"/>
