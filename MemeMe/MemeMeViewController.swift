@@ -19,6 +19,7 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     
     var memeImage: UIImage?
+    var memeModel:Meme = Meme()
     let imagePicker = UIImagePickerController()
     
     //MARK: - View Controls
@@ -173,8 +174,10 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func saveMeme(){
-        let meme = Meme(tText: topTextView.text!, bText: bottomTextView.text!, img: pickImage.image!, memeImg: memeImage!)
-        print(meme.description)
+        memeModel.topText = topTextView.text
+        memeModel.bottomText = bottomTextView.text
+        memeModel.image = pickImage.image
+        memeModel.memeImage = memeImage
     }
     
     @IBAction func shareImage(sender: UIBarButtonItem) {

@@ -9,23 +9,10 @@
 import Foundation
 import UIKit
 
-class Meme {
+struct Meme {
     var topText: String = ""
     var bottomText: String = ""
     var image: UIImage?
     var memeImage: UIImage?
-    
-    init(tText: String, bText: String, img: UIImage, memeImg: UIImage){
-        topText = tText
-        bottomText = bText
-        image = img
-        memeImage = memeImg
-    }
-    
-    var description: String {
-        get {
-            return "Top text:'\(self.topText)', bottom text: '\(self.bottomText)'."
-        }
-    }
     
 }
