@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeMeViewController.swift
 //  MemeMe
 //
 //  Created by Robert Garza on 11/18/15.
@@ -26,24 +26,9 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        
-        let textAttributes = NSAttributedString(string: "TOP", attributes:[
-            NSStrokeColorAttributeName:UIColor.blackColor(),
-            NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
-            NSStrokeWidthAttributeName: -3.0
-        ])
-        
-        topTextView.attributedText = textAttributes
-        topTextView.textAlignment = NSTextAlignment.Center
-        
-        bottomTextView.attributedText = textAttributes
-        bottomTextView.textAlignment = NSTextAlignment.Center
-        bottomTextView.text = "BOTTOM"
-
         imagePicker.delegate = self
-        topTextView.delegate = self
-        bottomTextView.delegate = self
+        setTextFields(topTextView, defaultText: "TOP")
+        setTextFields(bottomTextView, defaultText: "BOTTOM")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -53,7 +38,7 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
         if(pickImage.image == nil){
             shareButton.enabled = false
         } else {
-            self.view.sendSubviewToBack(pickImage)
+            view.sendSubviewToBack(pickImage)
             shareButton.enabled = true
         }
     }
@@ -73,19 +58,19 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBAction func pickAnImageFromAlbum(sender:AnyObject){
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         pickImage.contentMode = UIViewContentMode.ScaleAspectFill
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     //Pick from a camera
     @IBAction func pickAnImageFromCamera(sender: AnyObject) {
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
         pickImage.contentMode = UIViewContentMode.ScaleAspectFill
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     //Cancel button resets screen to initial state
     @IBAction func cancelButton(sender: UIBarButtonItem){
-        self.pickImage.image = nil
+        pickImage.image = nil
         topTextView.text = "TOP"
         bottomTextView.text = "BOTTOM"
         shareButton.enabled = false
@@ -95,13 +80,13 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.pickImage.image = image
+            pickImage.image = image
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     //MARK: - TextView Delegate Controls
@@ -115,20 +100,22 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        textView.text = ""
+        if(textView.text == "TOP" || textView.text == "BOTTOM"){
+            textView.text = ""
+        }
     }
     
     //MARK: - Keyboard Notifications
     
     func keyboardWillShow(notification: NSNotification){
         if(bottomTextView.isFirstResponder()){
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
     
     func keyboardWillHide(notification: NSNotification){
         if(bottomTextView.isFirstResponder()){
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            view.frame.origin.y = 0
         }
     }
 
@@ -150,6 +137,22 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     //MARK: - Meme Image functions
     
+    func setTextFields(textField: UITextView, defaultText: String){
+        
+        let textAttributes = NSAttributedString(string: defaultText, attributes:[
+            NSStrokeColorAttributeName:UIColor.blackColor(),
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
+            NSStrokeWidthAttributeName: -3.0
+            ])
+        
+        textField.delegate = self
+        textField.attributedText = textAttributes
+        textField.textAlignment = NSTextAlignment.Center
+        textField.autocapitalizationType = .AllCharacters
+        textField.textAlignment = .Center
+    }
+    
     func generateMemedImage()-> UIImage {
         
         //Hide ToolBars when generating image
@@ -158,7 +161,7 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         //Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -184,7 +187,7 @@ class MemeMeViewController: UIViewController, UIImagePickerControllerDelegate, U
         http://stackoverflow.com/questions/25644054/uiactivityviewcontroller-crashing-on-ios8-ipads
         */
         if(shareImageVC.respondsToSelector(Selector("popoverPresentationController"))){
-            shareImageVC.popoverPresentationController?.sourceView = self.pickImage
+            shareImageVC.popoverPresentationController?.sourceView = pickImage
         }
         presentViewController(shareImageVC, animated: true, completion: nil)
         shareImageVC.completionWithItemsHandler = {(activity: String?, completed: Bool, items: [AnyObject]?, error: NSError?) ->Void in
