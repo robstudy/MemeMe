@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF4C145A1C039EE40003F58C /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4C14591C039EE40003F58C /* Meme.swift */; };
 		DFF520A91BFCD5050007944F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF520A81BFCD5050007944F /* AppDelegate.swift */; };
 		DFF520AB1BFCD5050007944F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF520AA1BFCD5050007944F /* ViewController.swift */; };
 		DFF520AE1BFCD5050007944F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFF520AC1BFCD5050007944F /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF4C14591C039EE40003F58C /* Meme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meme.swift; sourceTree = "<group>"; };
 		DFF520A51BFCD5050007944F /* MemeMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFF520A81BFCD5050007944F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFF520AA1BFCD5050007944F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				DFF520A81BFCD5050007944F /* AppDelegate.swift */,
 				DFF520AA1BFCD5050007944F /* ViewController.swift */,
+				DF4C14591C039EE40003F58C /* Meme.swift */,
 				DFF520AC1BFCD5050007944F /* Main.storyboard */,
 				DFF520AF1BFCD5050007944F /* Assets.xcassets */,
 				DFF520B11BFCD5050007944F /* LaunchScreen.storyboard */,
@@ -259,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF4C145A1C039EE40003F58C /* Meme.swift in Sources */,
 				DFF520AB1BFCD5050007944F /* ViewController.swift in Sources */,
 				DFF520A91BFCD5050007944F /* AppDelegate.swift in Sources */,
 			);
@@ -487,6 +491,7 @@
 				DFF520CF1BFCD5050007944F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DFF520D01BFCD5050007944F /* Build configuration list for PBXNativeTarget "MemeMeTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +500,7 @@
 				DFF520D21BFCD5050007944F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DFF520D31BFCD5050007944F /* Build configuration list for PBXNativeTarget "MemeMeUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +509,7 @@
 				DFF520D51BFCD5050007944F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,28 +12,37 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var pickImage: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var topTextView: UITextView!
     @IBOutlet weak var bottomTextView: UITextView!
+    @IBOutlet weak var picToolBar: UIToolbar!
+    
+    @IBOutlet weak var stateToolBar: UIToolbar!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    
+    var memeImage: UIImage?
     let imagePicker = UIImagePickerController()
     
-    let textAttributes = NSAttributedString(string: "Text", attributes:[
-        NSStrokeColorAttributeName:UIColor.blackColor(),
-        NSForegroundColorAttributeName: UIColor.whiteColor(),
-        NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
-        NSStrokeWidthAttributeName: 10.0
-        ])
+    //MARK: - View Controls
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
+        let textAttributes = NSAttributedString(string: "TOP", attributes:[
+            NSStrokeColorAttributeName:UIColor.blackColor(),
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 30)!,
+            NSStrokeWidthAttributeName: -3.0
+        ])
+        
         topTextView.attributedText = textAttributes
         topTextView.textAlignment = NSTextAlignment.Center
-        topTextView.textColor = UIColor.whiteColor()
         
         bottomTextView.attributedText = textAttributes
         bottomTextView.textAlignment = NSTextAlignment.Center
-        bottomTextView.textColor = UIColor.whiteColor()
+        bottomTextView.text = "BOTTOM"
 
         imagePicker.delegate = self
         topTextView.delegate = self
@@ -44,14 +53,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.subscribeToKeyboardNotification()
-        print("\(topTextView.textColor)")
+        self.subscribeViewOrientation()
+        
+        if(pickImage.image == nil){
+            shareButton.enabled = false
+        } else {
+            self.view.sendSubviewToBack(pickImage)
+            shareButton.enabled = true
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.unsubscribeFromKeyboardNotifications()
+        self.unsubscribeViewOrientation()
     }
- 
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -72,11 +89,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    //MARK: - ImagePicker Delegate Controlls
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-
+    @IBAction func cancelButton(sender: UIBarButtonItem){
+        self.pickImage.image = nil
+        topTextView.text = "TOP"
+        bottomTextView.text = "BOTTOM"
+        shareButton.enabled = false
     }
+    
+    //MARK: - ImagePicker Delegate Controlls
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -92,10 +112,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     //MARK: - TextView Delegate Controlls
     
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-        return true
-    }
-    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n"){
             textView.resignFirstResponder()
@@ -104,13 +120,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return true
     }
     
-    //Move Keyboard up so it doesn't cover the textField
+    func textViewDidBeginEditing(textView: UITextView) {
+        //textView.autocorrectionType = .No
+        textView.text = ""
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        textView.resignFirstResponder()
+    }
+    
+    //MARK: - Keyboard Notifications
+    
     func keyboardWillShow(notification: NSNotification){
-        self.view.frame.origin.y -= getKeyboardHeight(notification)
+        if(bottomTextView.isFirstResponder()){
+            self.view.frame.origin.y -= getKeyboardHeight(notification)
+        }
     }
     
     func keyboardWillHide(notification: NSNotification){
-        self.view.frame.origin.y += getKeyboardHeight(notification)
+        if(bottomTextView.isFirstResponder()){
+            self.view.frame.origin.y += getKeyboardHeight(notification)
+        }
     }
 
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
@@ -128,5 +158,69 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
+    
+    //MARK: - Orientation notifications
+    
+    func changeBarButtonWidth(notification: NSNotification){
+        shareButton.width = self.view.bounds.width/2.0
+        cancelButton.width = self.view.bounds.width/2.0
+        cameraButton.width = self.view.bounds.width/2.0
+        albumButton.width = self.view.bounds.width/2.0
+    }
+    
+    func subscribeViewOrientation(){
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeBarButtonWidth:", name: UIDeviceOrientationDidChangeNotification, object: nil)
+    }
+    
+    func unsubscribeViewOrientation(){
+        NSNotificationCenter.defaultCenter().removeObserver(self, name:UIDeviceOrientationDidChangeNotification, object: nil)
+    }
+    
+    //MARK: - Meme Image functions
+    
+    func generateMemedImage()-> UIImage {
+        
+        //Hide ToolBars when generating image
+        picToolBar.hidden = true
+        stateToolBar.hidden = true
+        
+        //Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        //UnHide ToolBars
+        picToolBar.hidden = false
+        stateToolBar.hidden = false
+        
+        return memedImage
+    }
+    
+    func saveMeme(){
+        let meme = Meme(tText: topTextView.text!, bText: bottomTextView.text!, img: pickImage.image!, memeImg: memeImage!)
+    }
+    
+    @IBAction func shareImage(sender: UIBarButtonItem) {
+        self.memeImage = generateMemedImage()
+        
+        let imageObject = [self.memeImage!]
+        
+        let shareImageVC = UIActivityViewController(activityItems: imageObject, applicationActivities: nil)
+        /*Answer for how to fix view controller presentation on IPAD can be found at
+        http://stackoverflow.com/questions/25644054/uiactivityviewcontroller-crashing-on-ios8-ipads
+        */
+        if(shareImageVC.respondsToSelector(Selector("popoverPresentationController"))){
+            shareImageVC.popoverPresentationController?.sourceView = self.pickImage
+        }
+        presentViewController(shareImageVC, animated: true, completion: nil)
+        shareImageVC.completionWithItemsHandler = {(activity: String?, completed: Bool, items: [AnyObject]?, error: NSError?) ->Void in
+            if completed {
+                self.saveMeme()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+    }
+    
 }
 

@@ -19,39 +19,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="etH-kw-63Q">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="648"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-ut-bOz">
-                                <rect key="frame" x="57" y="511" width="300" height="150"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Text">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <font key="NSFont" size="14" name="HelveticaNeue-CondensedBlack"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2QM-Ub-4JQ">
                                 <rect key="frame" x="0.0" y="692" width="414" height="44"/>
                                 <items>
-                                    <barButtonItem title="Album" width="189" id="ZP7-iv-EFD">
-                                        <connections>
-                                            <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="HgN-Jn-B8U"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem title="Camera" width="135" id="wEa-P6-vAZ">
                                         <connections>
                                             <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="qQG-EA-X97"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Album" width="189" id="ZP7-iv-EFD">
+                                        <connections>
+                                            <action selector="pickAnImageFromAlbum:" destination="BYZ-38-t0r" id="HgN-Jn-B8U"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="at2-r9-w5e">
-                                <rect key="frame" x="57" y="35" width="300" height="150"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="at2-r9-w5e">
+                                <rect key="frame" x="57" y="49" width="300" height="34"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Text">
@@ -62,31 +48,68 @@
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fhj-CE-WAI">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem title="Share" width="185" id="oSB-0D-OzN">
+                                        <connections>
+                                            <action selector="shareImage:" destination="BYZ-38-t0r" id="ZwY-oY-zoI"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Cancel" width="198" id="OIh-p7-sIw">
+                                        <connections>
+                                            <action selector="cancelButton:" destination="BYZ-38-t0r" id="0Dx-TA-Tiw"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-ut-bOz">
+                                <rect key="frame" x="57" y="658" width="300" height="34"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Text">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue-CondensedBlack"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5N6-ut-bOz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="37" id="15m-B8-iZS"/>
-                            <constraint firstItem="at2-r9-w5e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="37" id="1Rt-vY-je7"/>
                             <constraint firstItem="etH-kw-63Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="3Xo-pT-MZH"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2QM-Ub-4JQ" secondAttribute="bottom" id="E0V-Cc-ogc"/>
                             <constraint firstItem="2QM-Ub-4JQ" firstAttribute="top" secondItem="etH-kw-63Q" secondAttribute="bottom" id="Erl-uV-cIi"/>
                             <constraint firstItem="2QM-Ub-4JQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="IPy-Vg-rRs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5N6-ut-bOz" secondAttribute="trailing" constant="37" id="JW1-Fh-0fo"/>
-                            <constraint firstItem="at2-r9-w5e" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="15" id="LJt-rt-OZv"/>
-                            <constraint firstItem="etH-kw-63Q" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="LvN-UU-xX7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="etH-kw-63Q" secondAttribute="trailing" constant="-20" id="S8l-jW-6vH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="at2-r9-w5e" secondAttribute="trailing" constant="37" id="dKB-Rr-zIG"/>
-                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="top" secondItem="5N6-ut-bOz" secondAttribute="bottom" constant="31" id="e96-cA-W43"/>
+                            <constraint firstItem="etH-kw-63Q" firstAttribute="top" secondItem="Fhj-CE-WAI" secondAttribute="bottom" id="Vkb-FE-e1w"/>
+                            <constraint firstItem="Fhj-CE-WAI" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="YQn-1k-3gj"/>
+                            <constraint firstItem="Fhj-CE-WAI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="csq-Cm-kMA"/>
+                            <constraint firstItem="2QM-Ub-4JQ" firstAttribute="top" secondItem="5N6-ut-bOz" secondAttribute="bottom" id="e96-cA-W43"/>
+                            <constraint firstItem="at2-r9-w5e" firstAttribute="top" secondItem="Fhj-CE-WAI" secondAttribute="bottom" constant="5" id="f7E-9h-evm"/>
+                            <constraint firstItem="at2-r9-w5e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="37" id="hto-Fr-4qL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fhj-CE-WAI" secondAttribute="trailing" constant="-20" id="hwW-bB-QcU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2QM-Ub-4JQ" secondAttribute="trailing" constant="-20" id="vgQ-Qd-8il"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="at2-r9-w5e" secondAttribute="trailing" constant="37" id="xZp-Dz-xHY"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="albumButton" destination="ZP7-iv-EFD" id="ZWc-d2-a4n"/>
                         <outlet property="bottomTextView" destination="5N6-ut-bOz" id="bYo-pC-GTt"/>
                         <outlet property="cameraButton" destination="wEa-P6-vAZ" id="YmM-Rc-0wk"/>
+                        <outlet property="cancelButton" destination="OIh-p7-sIw" id="7QU-al-fnQ"/>
+                        <outlet property="picToolBar" destination="2QM-Ub-4JQ" id="NDO-Am-Pxb"/>
                         <outlet property="pickImage" destination="etH-kw-63Q" id="iNg-Q7-eKv"/>
+                        <outlet property="shareButton" destination="oSB-0D-OzN" id="aAp-PH-ocE"/>
+                        <outlet property="stateToolBar" destination="Fhj-CE-WAI" id="Gfc-GZ-0qh"/>
                         <outlet property="topTextView" destination="at2-r9-w5e" id="MIR-pV-GyM"/>
                     </connections>
                 </viewController>
